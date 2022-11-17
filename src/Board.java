@@ -2,6 +2,9 @@ import java.util.Random;
 
 public class Board {
 
+    int x=9;
+    int y=9;
+
     Field[][] fields;
 
     int numberOfBombs(){
@@ -11,9 +14,21 @@ public class Board {
         return numberOfBombs;
     }
 
+    void toggleFlag(int x, int y){
+        this.x=x;
+        this.y=y;
+        fields[x][y].setFlag(true);
+    }
+
+    void toggleReveal(int x, int y){
+        this.x=x;
+        this.y=y;
+        fields[x][y].setRevealed(true);
+    }
+
 void fillFields(){
 
-    fields = new Field[9][9];
+    fields = new Field[x][y];
 
     //tworzymy obiekty w tablicy
     for (int i = 0; i < fields.length; i++) {
@@ -40,7 +55,7 @@ void fillFields(){
         int rand2=random2.nextInt(fields.length);
 
 
-        if (fields[rand1][rand2].isBomb()==false){
+        if (!fields[rand1][rand2].isBomb()){
             fields[rand1][rand2].setBomb(true);
             i++;
         }
@@ -56,9 +71,13 @@ void showFieldBoard(){
             System.out.print("{");
             if (!fields[i][j].isFlag()){
                 System.out.print(".");
+            } else if (fields[i][j].isFlag()) {
+                System.out.print("F");
             }
             if (!fields[i][j].isRevealed()){
                 System.out.print(".");
+            }else if (fields[i][j].isRevealed()) {
+                System.out.print("R");
             }
             if (!fields[i][j].isBomb()){
                 System.out.print(".");
@@ -81,6 +100,25 @@ void showFieldBoard(){
         System.out.println();
     }
 }
+
+    int bombsLeft(){
+        int bombsLeft;
+        bombsLeft=0;
+
+        for (int i = 0; i < fields.length; i++) {
+            for (int j = 0; j < fields.length; j++) {
+                if(fields[i][j].isBomb()){
+                    bombsLeft++;
+                }
+            }
+        }
+
+        return bombsLeft;
+    }
+
+    void bombsLeftInfo(){
+        System.out.println("There is "+bombsLeft()+" mines left on board");
+    }
 
 void showFieldsStatus(){
 

@@ -8,6 +8,10 @@ public class Main {
         board.showFieldsStatus();
         System.out.println();
         board.showFieldBoard();
+        board.toggleFlag(1,1);
+        board.toggleReveal(1,1);
+        board.showFieldBoard();
+        board.bombsLeftInfo();
 
     }
 }
