@@ -59,17 +59,19 @@ void fillFields(){
 
     void fillFieldsBombs(){
         for (int i = 0; i < numberOfBombs();) {
-
             Random random1 = new Random();
             int rand1=random1.nextInt(fields.length);
 
             Random random2 = new Random();
             int rand2=random2.nextInt(fields.length);
 
-
-            if (!fields[rand1][rand2].isBomb()){
-                fields[rand1][rand2].setBomb(true);
-                i++;
+            for (int j = 0; j < fields.length; j++) {
+                for (int k = 0; k < fields.length; k++) {
+                    if (!fields[rand1][rand2].isBomb()&& !fields[j][k].isRevealed()){
+                        fields[rand1][rand2].setBomb(true);
+                        i++;
+                    }
+                }
             }
         }
     }
@@ -167,4 +169,23 @@ void fillFields(){
         }
     }
 
+    void startGame(){
+        fillFields();
+        showFieldBoard();
+    }
+
+    void firstMove(int x, int y){
+        toggleReveal(x,y);
+        fillFieldsBombs();
+        showFieldBoard();
+    }
+
+    void move(String z,int x, int y){
+        if(z=="toggleFlag"){
+            toggleFlag(x,y);
+        } else if (z=="Reveal") {
+            toggleReveal(x,y);
+        }
+        showFieldBoard();
+    }
 }
