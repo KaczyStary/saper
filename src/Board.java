@@ -133,7 +133,7 @@ void fillFields(){
 
         for (int i = (x-1); i < (x+2); i++) {
             for (int j = (y-1); j < (y+2) ; j++) {
-                if(i<0||j<0||i>fields.length||j>fields.length) {
+                if(i<0||j<0||i>8||j>8) {
                     //skip
                 }else if (fields[i][j].isBomb()){
                     bombsaroundfield+=1;
