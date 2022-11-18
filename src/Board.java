@@ -26,6 +26,12 @@ public class Board {
         fields[x][y].setRevealed(true);
     }
 
+    void toggleBomb(int x, int y){
+        this.x=x;
+        this.y=y;
+        fields[x][y].setBomb(true);
+    }
+
 void fillFields(){
 
     fields = new Field[x][y];
@@ -62,40 +68,38 @@ void fillFields(){
     }
 }
 
-void showFieldBoard(){
-    int j;
-    for (int i = 0; i < fields.length; i++) {
-        System.out.print(" i"+i+"  ");
-        for (j=0 ; j < fields.length; j++) {
-
-            System.out.print("{");
-            if (!fields[i][j].isFlag()){
-                System.out.print(".");
-            } else if (fields[i][j].isFlag()) {
-                System.out.print("F");
-            }
-            if (!fields[i][j].isRevealed()){
-                System.out.print(".");
-            }else if (fields[i][j].isRevealed()) {
-                System.out.print("R");
-            }
-            if (!fields[i][j].isBomb()){
-                System.out.print(".");
-            }else{
-                System.out.print("B");
-            }
-            System.out.print("}");
-
-            if (i == (fields.length-1)&&j==(fields.length)-1){
-                System.out.println();
-                for (int k = 0; k < fields.length; k++) {
-                    if (k==0){
-                        System.out.print("     ");
+    void showFieldBoard(){
+        int j;
+        for (int i = 0; i < fields.length; i++) {
+            System.out.print(" i"+i+"  ");
+                for (j=0 ; j < fields.length; j++) {
+                System.out.print("{");
+                    if (!fields[i][j].isFlag()){
+                        System.out.print(".");
+                    } else if (fields[i][j].isFlag()) {
+                        System.out.print("F");
                     }
+                    if (!fields[i][j].isRevealed()){
+                        System.out.print(".");
+                    }else if (fields[i][j].isRevealed()) {
+                        System.out.print("R");
+                    }
+                    if (!fields[i][j].isBomb()){
+                        System.out.print(".");
+                    }else{
+                        System.out.print("B");
+                    }
+                System.out.print("}");
+
+                    if (i == (fields.length-1)&&j==(fields.length)-1){
+                        System.out.println();
+                    for (int k = 0; k < fields.length; k++) {
+                        if (k==0){
+                            System.out.print("     ");
+                        }
                     System.out.print(" j"+k+"  ");
                 }
             }
-
         }
         System.out.println();
     }
@@ -104,7 +108,6 @@ void showFieldBoard(){
     int bombsLeft(){
         int bombsLeft;
         bombsLeft=0;
-
         for (int i = 0; i < fields.length; i++) {
             for (int j = 0; j < fields.length; j++) {
                 if(fields[i][j].isBomb()){
@@ -112,7 +115,6 @@ void showFieldBoard(){
                 }
             }
         }
-
         return bombsLeft;
     }
 
@@ -120,24 +122,43 @@ void showFieldBoard(){
         System.out.println("There is "+bombsLeft()+" mines left on board");
     }
 
-void showFieldsStatus(){
+    int bombsAroundField(int x, int y){
+        int bombsaroundfield=0;
 
-    int z=1;
-
-    for (int i = 0; i < fields.length; i++) {
-        for (int j = 0; j < fields.length; j++) {
-
-            System.out.print("Czy pole nr "+z+" jest odkryte: ");
-            System.out.println(fields[i][j].isRevealed());
-            System.out.print("Czy pole nr "+z+" zawiera flage: ");
-            System.out.println(fields[i][j].isFlag());
-            System.out.print("Czy pole nr "+z+" zawiera bombe: ");
-            System.out.println(fields[i][j].isBomb());
-            System.out.println();
-            z=z+1;
+        for (int i = (x-1); i < (x+2); i++) {
+            for (int j = (y-1); j < (y+2) ; j++) {
+                if(i<0||j<0||i>fields.length||j>fields.length) {
+                    //skip
+                }else if (fields[i][j].isBomb()){
+                    bombsaroundfield+=1;
+                }
+            }
         }
+        if (fields[x][y].isBomb()){
+            bombsaroundfield-=1;
+        }
+        
+        return bombsaroundfield;
     }
 
-}
+    void bombsAroundFieldInfo(int x, int y){
+        System.out.println("ilosc bomb wokol pola "+"["+x+","+y+"]: "+bombsAroundField(x,y));
+    }
+
+    void showFieldsStatus(){
+        int z=1;
+        for (int i = 0; i < fields.length; i++) {
+            for (int j = 0; j < fields.length; j++) {
+                System.out.print("Czy pole nr "+z+" jest odkryte: ");
+                System.out.println(fields[i][j].isRevealed());
+                System.out.print("Czy pole nr "+z+" zawiera flage: ");
+                System.out.println(fields[i][j].isFlag());
+                System.out.print("Czy pole nr "+z+" zawiera bombe: ");
+                System.out.println(fields[i][j].isBomb());
+                System.out.println();
+                z=z+1;
+            }
+        }
+    }
 
 }
