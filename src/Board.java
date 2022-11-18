@@ -17,7 +17,11 @@ public class Board {
     void toggleFlag(int x, int y){
         this.x=x;
         this.y=y;
-        fields[x][y].setFlag(true);
+        if(fields[x][y].isFlag()){
+            fields[x][y].setFlag(false);
+        }else if (!fields[x][y].isFlag()){
+            fields[x][y].setFlag(true);
+        }
     }
 
     void toggleReveal(int x, int y){
@@ -51,22 +55,24 @@ void fillFields(){
             fields[i][j].setBomb(false);
         }
     }
+}
 
-    for (int i = 0; i < numberOfBombs();) {
+    void fillFieldsBombs(){
+        for (int i = 0; i < numberOfBombs();) {
 
-        Random random1 = new Random();
-        int rand1=random1.nextInt(fields.length);
+            Random random1 = new Random();
+            int rand1=random1.nextInt(fields.length);
 
-        Random random2 = new Random();
-        int rand2=random2.nextInt(fields.length);
+            Random random2 = new Random();
+            int rand2=random2.nextInt(fields.length);
 
 
-        if (!fields[rand1][rand2].isBomb()){
-            fields[rand1][rand2].setBomb(true);
-            i++;
+            if (!fields[rand1][rand2].isBomb()){
+                fields[rand1][rand2].setBomb(true);
+                i++;
+            }
         }
     }
-}
 
     void showFieldBoard(){
         int j;
