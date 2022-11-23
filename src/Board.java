@@ -1,9 +1,11 @@
 import java.util.Random;
+import java.util.Scanner;
 
 public class Board {
 
     int x=9;
     int y=9;
+    boolean gameOver=false;
 
     Field[][] fields;
 
@@ -15,8 +17,7 @@ public class Board {
     }
 
     void toggleFlag(int x, int y){
-        this.x=x;
-        this.y=y;
+
         if(fields[x][y].isFlag()){
             fields[x][y].setFlag(false);
         }else if (!fields[x][y].isFlag()){
@@ -58,20 +59,40 @@ void fillFields(){
 }
 
     void fillFieldsBombs(){
-        for (int i = 0; i < numberOfBombs();) {
+//        for (int i = 0; i < numberOfBombs();) {
+//
+//            Random random1 = new Random();
+//            int rand1=random1.nextInt(fields.length);
+//
+//            Random random2 = new Random();
+//            int rand2=random2.nextInt(fields.length);
+//
+//            for (int j = 0; j < fields.length; j++) {
+//                for (int k = 0; k < fields.length; k++) {
+//                    if (!fields[rand1][rand2].isBomb()){
+//                        if (!fields[j][k].isRevealed()) {
+//                            fields[rand1][rand2].setBomb(true);
+//                            i++;
+//                        }
+//                    }
+//                }
+//            }
+//        }
+        int xd=0;
+        while (xd<numberOfBombs()){
             Random random1 = new Random();
             int rand1=random1.nextInt(fields.length);
 
             Random random2 = new Random();
             int rand2=random2.nextInt(fields.length);
 
-            for (int j = 0; j < fields.length; j++) {
-                for (int k = 0; k < fields.length; k++) {
-                    if (!fields[rand1][rand2].isBomb()&& !fields[j][k].isRevealed()){
-                        fields[rand1][rand2].setBomb(true);
-                        i++;
-                    }
-                }
+            if(!fields[rand1][rand2].isBomb()&&!fields[rand1][rand2].isRevealed()){
+//                    System.out.println("ustawiam bombe");
+//                    System.out.println("rand1: "+rand1);
+//                    System.out.println("rand2: "+rand2);
+                    fields[rand1][rand2].setBomb(true);
+                    xd++;
+
             }
         }
     }
@@ -90,7 +111,7 @@ void fillFields(){
                     if (!fields[i][j].isRevealed()){
                         System.out.print(".");
                     }else if (fields[i][j].isRevealed()) {
-                        System.out.print("R");
+                        System.out.print(bombsAroundField(i,j));
                     }
                     if (!fields[i][j].isBomb()){
                         System.out.print(".");
@@ -123,7 +144,23 @@ void fillFields(){
                 }
             }
         }
+
+        for (int i = 0; i < fields.length; i++) {
+            for (int j = 0; j < fields.length; j++) {
+                if(fields[i][j].isBomb()&&fields[i][j].isFlag()){
+                    bombsLeft--;
+                }
+            }
+        }
+
         return bombsLeft;
+    }
+
+    void updateBombStatus(){
+        bombsLeft();
+        if (bombsLeft()==0){
+            gameOver=true;
+        }
     }
 
     void bombsLeftInfo(){
@@ -174,18 +211,88 @@ void fillFields(){
         showFieldBoard();
     }
 
-    void firstMove(int x, int y){
-        toggleReveal(x,y);
-        fillFieldsBombs();
-        showFieldBoard();
+    void firstMove(){
+        Scanner scan = new Scanner(System.in);
+        System.out.println("podaj i: ");
+        int x=scan.nextInt();
+        System.out.println("podaj j: ");
+        int y=scan.nextInt();
+          toggleReveal(x,y);
+          fillFieldsBombs();
+          showFieldBoard();
     }
 
-    void move(String z,int x, int y){
-        if(z=="toggleFlag"){
-            toggleFlag(x,y);
-        } else if (z=="Reveal") {
-            toggleReveal(x,y);
+    void move(){
+        int a=0;
+        int b=0;
+
+        while (!gameOver){
+            Scanner scanner = new Scanner(System.in);
+
+            System.out.println("what do u want to do: ");
+            System.out.println("1. toggleFlag");
+            System.out.println("2. revealField");
+            System.out.println("3. bombsLeft");
+
+            int playerMove = scanner.nextInt();
+
+            switch (playerMove){
+                case 1: {
+                    System.out.println("case 1, input i ");
+                    a = scanner.nextInt();
+                    System.out.println("case 1, input j");
+                    b = scanner.nextInt();
+                    toggleFlag(a, b);
+                    break;
+                }
+                case 2: {
+                    System.out.println("case 2, input i ");
+                    a = scanner.nextInt();
+                    System.out.println("case 2, input j");
+                    b = scanner.nextInt();
+                    toggleReveal(a, b);
+                    break;
+                }
+                case 3: {
+                    bombsLeftInfo();
+                    break;
+                }
+            }
+
+            gameStatus(a,b);
+            showFieldBoard();
+
         }
         showFieldBoard();
+        if (bombsLeft()==0){
+            System.out.println("Win");
+        }else {
+            System.out.println("Lose");
+        }
+
+        return;
     }
+
+    void gameStatus(int a, int b){
+        if (fields[a][b].isRevealed()&&fields[a][b].isBomb()){
+            gameOver=true;
+        }
+        updateBombStatus();
+    }
+
+//    boolean gameOverFinal(){
+//
+//       boolean gameOver = false;
+//        for (int i = 0; i < fields.length; i++) {
+//            for (int j = 0; j < fields.length; j++) {
+//                if (fields[i][j].isRevealed()&&fields[i][j].isBomb()){
+//                    gameOver=true;
+//                }else {
+//                    gameOver=false;
+//                }
+//            }
+//        }
+//
+//        return gameOver;
+//    }
 }
