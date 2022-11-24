@@ -193,14 +193,14 @@ public class Board {
 
         for (int i = (x-1); i < (x+2); i++) {
             for (int j = (y-1); j < (y+2) ; j++) {
-                if(i<0||j<0||i>8||j>8) {
+                if(i<0||j<0||i>field.getHeight()||j>field.getWidth()) {
                     //skip
                 }else if (fields[i][j].isBomb()){
                     bombsaroundfield+=1;
                 }
             }
         }
-        if (fields[x][y].isBomb()){
+        if (fields[x][y].isBomb()&&fields[x][y].isFlag()){
             bombsaroundfield-=1;
         }
         
@@ -223,6 +223,7 @@ public class Board {
         field.setMoveY(fieldInput.nextInt());
           toggleReveal(field.getMoveX(), field.getMoveY());
           fillFieldsBombs();
+          bombsLeftInfo();
           showFieldBoard();
     }
 
@@ -231,37 +232,33 @@ public class Board {
             System.out.println("what do u want to do: ");
             System.out.println("1. toggleFlag");
             System.out.println("2. revealField");
-            System.out.println("3. bombsLeft");
-            System.out.println("4. quitGame");
+            System.out.println("3. quitGame");
 
             int playerMove = fieldInput.nextInt();
 
             switch (playerMove){
                 case 1: {
-                    System.out.println("case 1, input i ");
+                    System.out.print("case 1, input i ");
                     field.setMoveX(fieldInput.nextInt());
-                    System.out.println("case 1, input j");
+                    System.out.print("case 1, input j");
                     field.setMoveY(fieldInput.nextInt());
                     toggleFlag(field.getMoveX(), field.getMoveY());
                     break;
                 }
                 case 2: {
-                    System.out.println("case 2, input i ");
+                    System.out.print("case 2, input i ");
                     field.setMoveX(fieldInput.nextInt());
-                    System.out.println("case 2, input j");
+                    System.out.print("case 2, input j");
                     field.setMoveY(fieldInput.nextInt());
                     toggleReveal(field.getMoveX(), field.getMoveY());
                     break;
                 }
                 case 3: {
-                    bombsLeftInfo();
-                    break;
-                }
-                case 4: {
                     return;
                 }
             }
             gameStatus(field.getMoveX(),field.getMoveY());
+            bombsLeftInfo();
             showFieldBoard();
 
         }

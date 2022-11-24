@@ -16,7 +16,11 @@ public class Field {
     }
 
     public void setMoveX(int moveX) {
-        this.moveX = moveX;
+        if (moveX>=0&&moveX<=getHeight()) {
+            this.moveX = moveX;
+        }else {
+            System.out.println("liczba niepoprawna");
+        }
     }
 
     public int getMoveY() {
@@ -24,7 +28,11 @@ public class Field {
     }
 
     public void setMoveY(int moveY) {
-        this.moveY = moveY;
+        if (moveY>=0&&moveY<=getWidth()) {
+            this.moveY = moveY;
+        }else {
+            System.out.println("liczba niepoprawna");
+        }
     }
 
     public int getBombs() {
