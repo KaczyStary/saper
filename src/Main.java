@@ -2,22 +2,27 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-
-//        for (int i = 0; i < 100; i++) {
-//            Board board = new Board();
-//            board.startGame();
-//            board.firstMove(1,1);
-//        }
-
         Board board = new Board();
-        board.startGame();
-        board.firstMove();
-        board.move();
+        Scanner switchMenu = new Scanner(System.in);
 
-//        Scanner scan = new Scanner(System.in);
-//        String z=scan.nextLine();
-//        int x=scan.nextInt();
-//        int y=scan.nextInt();
-//        board.move(z,x,y);
+        System.out.println("1. Start ");
+        System.out.println("2. Exit");
+        System.out.println("3. ");
+        int switchCaseMenu=switchMenu.nextInt();
+
+        switch (switchCaseMenu){
+            case 1:{
+                board.setBoard();
+                board.startGame();
+                board.firstMove();
+                board.move();
+            }
+            case 2:{
+                break;
+            }
+            case 3:{
+
+            }
+        }
     }
 }

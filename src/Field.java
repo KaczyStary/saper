@@ -3,6 +3,77 @@ public class Field {
     private boolean bomb;
     private boolean revealed;
     private boolean flag;
+    private int width;
+    private int height;
+    private boolean gameOver=false;
+    private double difficulty;
+    private int numberOfBombs;
+    private int bombs;
+    private int moveX;
+    private int moveY;
+    public int getMoveX() {
+        return moveX;
+    }
+
+    public void setMoveX(int moveX) {
+        this.moveX = moveX;
+    }
+
+    public int getMoveY() {
+        return moveY;
+    }
+
+    public void setMoveY(int moveY) {
+        this.moveY = moveY;
+    }
+
+    public int getBombs() {
+        return bombs;
+    }
+
+    public void setBombs(int bombs) {
+        this.bombs = bombs;
+    }
+
+    public int getNumberOfBombs() {
+        return numberOfBombs;
+    }
+
+    public void setNumberOfBombs(int numberOfBombs) {
+        this.numberOfBombs = numberOfBombs;
+    }
+
+    public double getDifficulty() {
+        return difficulty;
+    }
+
+    public void setDifficulty(double difficulty) {
+        this.difficulty = difficulty;
+    }
+
+    public boolean isGameOver() {
+        return gameOver;
+    }
+
+    public void setGameOver(boolean gameOver) {
+        this.gameOver = gameOver;
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public void setWidth(int width) {
+        this.width = width;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public void setHeight(int height) {
+        this.height = height;
+    }
 
     public boolean isBomb() {
         return bomb;
