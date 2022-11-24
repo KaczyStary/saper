@@ -191,19 +191,17 @@ public class Board {
     int bombsAroundField(int x, int y){
         int bombsaroundfield=0;
 
-        for (int i = (x-1); i < (x+2); i++) {
-            for (int j = (y-1); j < (y+2) ; j++) {
-                if(i<0||j<0||i>field.getHeight()||j>field.getWidth()) {
-                    //skip
-                }else if (fields[i][j].isBomb()){
-                    bombsaroundfield+=1;
+        for (int i = (x-1); i <(x+2) ; i++) {
+            for (int j = (y-1); j < (y+2); j++) {
+                if (fields[i][j].isBomb()){
+                    bombsaroundfield=bombsaroundfield+1;
                 }
             }
         }
-        if (fields[x][y].isBomb()&&fields[x][y].isFlag()){
-            bombsaroundfield-=1;
+
+        if (fields[x][y].isBomb()){
+            bombsaroundfield--;
         }
-        
         return bombsaroundfield;
     }
 
