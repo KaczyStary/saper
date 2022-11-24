@@ -159,7 +159,7 @@ public class Board {
         int bombsLeft;
         bombsLeft=0;
         for (int i = 0; i < field.getHeight(); i++) {
-            for (int j = 0; j < field.getWidth(); j++) {
+            for (int j = 0; j < field.getHeight(); j++) {
                 if(fields[i][j].isBomb()){
                     bombsLeft++;
                 }

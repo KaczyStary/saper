@@ -11,6 +11,16 @@ public class Field {
     private int bombs;
     private int moveX;
     private int moveY;
+    private int bombsLeft=0;
+
+    public int getBombsLeft() {
+        return bombsLeft;
+    }
+
+    public void setBombsLeft(int bombsLeft) {
+        this.bombsLeft = bombsLeft;
+    }
+
     public int getMoveX() {
         return moveX;
     }
